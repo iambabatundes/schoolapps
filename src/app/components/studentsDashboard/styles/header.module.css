@@ -1,0 +1,19 @@
+.content {
+    display: flex;    
+    background: #f0f1f3;
+    height: 90vh;
+  }
+
+  .main {
+    width: 100%;
+    margin: 1.5rem 1rem;
+    margin-left: 250px;
+    background: #f0f1f3;    
+}
+
+@media (max-width: 700px) {
+    .main {       
+        margin: 1.5rem 1rem;
+    }
+}
+    

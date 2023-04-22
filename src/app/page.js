@@ -1,10 +1,10 @@
-import styles from "./styles/page.module.css";
+import style from "./styles/page.module.css";
 
 export default function Home() {
   return (
-    <section>
+    <section className={style.main}>
       <div>
-        <h1>This is the Home page </h1>
+        <h1>This is the login page</h1>
       </div>
     </section>
   );

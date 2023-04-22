@@ -1,5 +1,5 @@
 import React from "react";
-import style from "../styles/navbar.module.css";
+import style from "./styles/navbar.module.css";
 import { Poppins } from "next/font/google";
 import Search from "./search";
 import Icon from "./Icon";
@@ -52,7 +52,7 @@ function Navbar({ toggleSidebar }) {
             <img src="/emma-b-scaled.jpg" alt="User image" />
             <div className={style.details}>
               <span className={style.username}>Tunde</span>
-              <span className={style.position}>Admin</span>
+              <span className={style.position}>Teacher</span>
             </div>
           </div>
         </div>

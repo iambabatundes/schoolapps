@@ -1,5 +1,5 @@
 import React from "react";
-import style from "../styles/navbar.module.css";
+import style from "./styles/navbar.module.css";
 import { Poppins } from "next/font/google";
 import Search from "./search";
 import Icon from "./Icon";
