@@ -1,0 +1,265 @@
+.admin__main {
+    display: flex;
+    justify-content: space-between;
+}
+
+.admin__group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+
+}
+
+.group {
+    background: linear-gradient(to bottom, #722223 3%, #e42f31);
+    box-shadow: 2px 0px 5px rgba(192, 73, 73, 0.1);
+    padding: 8px 0px;
+    height: 80px;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    fill: #fff;
+    color: #fff;
+    border: 0;
+    line-height: 15px;
+}
+
+/* .group__title {
+    padding-right: 20px
+} */
+
+.group__figure {
+    background: #fff;
+    box-shadow: 2px 0px 5px rgba(192, 73, 73, 0.1);
+    height: 80px;
+    width: 140px;
+    padding: 26px 20px;
+    margin-right: 16px;
+    font-weight: 700;
+}
+
+.group__figure h1 {
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+@media (max-width: 700px) {
+    .admin__main {
+        display: flex;
+        flex-direction: column;
+        /* justify-content: space-between; */
+    }
+
+    .admin__group {
+        margin-bottom: 12px;
+    }
+
+    .group__figure {
+        width: 187px;
+        margin-right: 0px;
+    }
+}
+
+/* @media (max-width: 768px) {
+    .admin__main {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .admin__group {
+        width: 50%;
+        margin-bottom: 15px;
+    }
+
+    .group {
+        padding: 10px 20px 0px;
+    }
+
+    .group__figure {
+        margin-right: 15px
+    }
+
+    .group__figure h1 {
+        font-size: 1.2rem;
+    }
+} */
+
+/* @media (max-width: 1024px) {
+    .admin__main {
+        display: flex;        
+    }
+
+    .admin__group {
+        
+        margin-bottom: 15px;
+    }
+
+    .group {
+        padding: 10px 20px 0px;
+    }
+
+    .group__figure {
+        margin-right: 15px
+    }
+
+    .group__figure h1 {
+        font-size: 1.2rem;
+    }
+} */
+
+/* @media (min-width: 1440px) {
+    .admin__main {
+        display: flex;
+        justify-content: space-between;
+
+    }
+
+    .admin__group {
+        width: 50%;
+
+
+    }
+
+    .group {
+        padding: 10px 20px 0px;
+    }
+
+    .page_group__figure {
+        margin-right: 15px
+    }
+
+} */
+
+
+.grid__container {
+    margin-top: 20px;
+    display: grid;
+    /* grid-template-columns: repeat(2, 1fr); */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 10px;
+
+}
+
+@media (max-width: 700px) {
+    .grid__container {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+.container {
+    background: #fff;
+
+}
+
+.main__perf {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 12px;
+    padding-bottom: 0px;
+    border-bottom: 1px solid #ccc;
+}
+
+.PerStat{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.performance__icon {
+    display: flex;
+    cursor: pointer;
+    /* gap: 15px; */
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.groups {    
+    margin: 0;
+    box-sizing: border-box;
+    background: none;
+    border: 0;
+    padding: 4px 8px 0px;
+
+}
+.graduationCap {    
+    margin: 0;
+    box-sizing: border-box;
+    background: none;
+    border: 0;
+    padding: 4px 8px 0px;
+
+}
+
+.naira {
+    margin: 0;    
+    background: none;
+    border: 0;
+    padding: 4px 8px 0px;
+}
+
+.reload {    
+    margin: 0;
+    box-sizing: border-box;
+    background: none;
+    border: 0;
+    padding: 4px 8px 0px;
+}
+
+.selectedIcon {
+    border-bottom: 3px solid rgb(46, 52, 248);
+    background-color: #e8e7e7;
+    /* padding: 4px 8px 0px; */
+  }
+
+.school__perf {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+    /* gap: 10px; */
+}
+
+.section {
+    display: flex;
+    align-items: center;
+    /* padding-right: 10px; */
+    padding: 0.2rem;
+}
+
+.section h1 {
+    padding-right: 10px;
+    font-weight: 700;
+}
+
+.select {
+    /* margin-bottom: 1rem; */
+    padding: 0.2rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ccc;
+    outline: 0;
+}
+
+.download {
+    display: flex;
+    align-items: center;
+    fill: green;
+    cursor: pointer;
+}
+
+.downlaod h1 {
+    font-weight: 600;
+}
+
+.canvas {
+    height: 0;
+    width: 0;
+    display: block;
+    margin: 0;
+    padding: 0;
+}

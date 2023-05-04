@@ -1,0 +1,81 @@
+.AcademyLine__main {
+    padding: 12px;
+}
+
+.PerformanceMenu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+.PerformanceMenu h1{
+  display: none;
+  font-size: 14px;
+
+}
+
+.PerformanceMenu__icon {
+    background: none;
+    border: 0;
+    float: left;    
+    cursor: pointer;
+    padding: 5px
+    
+}
+
+.PerformanceMenu__icon svg {    
+    width: 20px;
+    height: 15px;
+    
+}
+
+.PerformanceMenu__icon:hover  {    
+    background: #ccc;
+    
+}
+
+.PerformanceMenu__icon1 {
+    display: none;
+    background: none;
+    border: 0;
+    float: left;
+}
+
+.PerformanceMenu {
+  position: relative;
+}
+
+.PerformanceMenu__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 335px;
+  z-index: 100;
+  background-color: white;
+  border: 1px solid black;
+  padding: 0.5rem;
+  /* display: none; */
+  width: 100%;
+  max-width: 200px;
+
+}
+
+.PerformanceMenu__dropdown a {
+  display: block;
+  padding: 0.25rem 0.5rem;
+}
+
+.PerformanceMenu__dropdown a:hover {
+  background-color: lightgray;
+}
+
+.FullScreenChart {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: #ccc;
+  }
+  

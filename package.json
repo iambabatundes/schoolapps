@@ -9,8 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "13.3.0",
+    "chart.js": "^4.2.1",
+    "chartjs-plugin-datalabels": "^2.2.0",
+    "exceljs": "^4.3.0",
+    "file-saver": "^2.0.5",
+    "jspdf": "^2.5.1",
+    "lodash": "^4.17.21",
+    "next": "^13.3.4",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "18.2.0",
+    "xlsx": "^0.18.5"
   }
 }

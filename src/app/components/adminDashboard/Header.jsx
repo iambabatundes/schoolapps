@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
-import Navbar from "./navbar";
-import SideBar from "./sidebar";
+import React, { lazy, useState } from "react";
+const Navbar = lazy(() => import("./navbar"));
+const SideBar = lazy(() => import("./sidebar"));
 import style from "./styles/header.module.css";
 
 function Header({ children }) {

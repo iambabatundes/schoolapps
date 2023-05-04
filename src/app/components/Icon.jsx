@@ -78,7 +78,7 @@ function Icon({ icon, global, menu, className, logo, close, onClick }) {
           </svg>
         </button>
       )}
-      
+
       {menu && (
         <button
           aria-label="button"

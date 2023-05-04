@@ -1,5 +1,5 @@
 import React from "react";
-import { Poppins } from "next/font/google";
+import {Poppins} from "next/font/google"
 import "./styles/globals.css";
 
 const poppins = Poppins({
@@ -16,9 +16,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={poppins.className}>
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

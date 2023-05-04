@@ -1,0 +1,19 @@
+.BarChart__main {
+    padding: 12px;
+}
+
+.PerformanceMenu {
+    display: flex;
+    align-items: center;
+    
+}
+
+.PerformanceMenu span{
+    /* padding-right: 90px; */
+
+}
+
+.PerformanceMenu__icon {
+    background: none;
+    border: 0;
+}
