@@ -1,0 +1,40 @@
+.color-picker-container {
+    position: relative;
+  }
+  
+  #color-picker {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .color-circle {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .color-circles-container {
+    position: absolute;
+    top: 50px;
+    left: -5px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 200px;
+    height: 100px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .active {
+    border: 1px solid #000;
+  }
+  

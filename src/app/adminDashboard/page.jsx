@@ -1,23 +1,19 @@
 "use client";
-import React, { lazy, useState } from "react";
+import React, { useState } from "react";
 import style from "./styles/page.module.css";
 import Featured from "../components/adminDashboard/featured";
 import Icon from "../components/adminDashboard/Icon";
 import Selection from "./Selection";
-import BestHeader from "./bestHeader";
-const BarChart = lazy(() => import("../components/adminDashboard/BarChart"));
-const AcademyLine = lazy(() =>
-  import("../components/adminDashboard/AcademyLine")
-);
-const RevenueLine = lazy(() =>
-  import("../components/adminDashboard/RevenueLine")
-);
+import BestStudents from "./bestStudents";
+import BarChart from "../components/adminDashboard/BarChart";
+import AcademyLine from "../components/adminDashboard/AcademyLine";
+import RevenueLine from "../components/adminDashboard/RevenueLine";
+import Calendar from "./calendar";
+import OnlineMember from "./onlineMember";
 
 function AdminDashboard() {
   const [selectedIcon, setSelectedIcon] = useState("groups");
   const [selectedSection, setSelectedSection] = useState("2022/2023");
-  const [selectedClass, setSelectedClass] = useState("Primary");
-  const [selectedYear, setSelectedYear] = useState("Primary");
 
   const datas = [
     "2022/2023",
@@ -31,23 +27,7 @@ function AdminDashboard() {
     setSelectedSection(event.target.value);
   };
 
-  const handleClassChange = (event) => {
-    setSelectedClass(event.target.value);
-  };
-
-  const handleYearChange = (event) => {
-    setSelectedYear(event.target.value);
-  };
-
   const handleSubmit = (event) => {
-    event.preventDefault();
-  };
-
-  const handleYearSubmit = (event) => {
-    event.preventDefault();
-  };
-
-  const handleClassSubmit = (event) => {
     event.preventDefault();
   };
 
@@ -125,18 +105,19 @@ function AdminDashboard() {
           </div>
         </div>
         <section className={style.bestStudent}>
-          <BestHeader            
-            handleClassChange={handleClassChange}
-            handleClassSubmit={handleClassSubmit}
-            // handleSubmit={handleChange}
-            handleYearChange={handleYearChange}
-            handleYearSubmit={handleYearSubmit}
-            value={selectedClass}
-            selectedYear={selectedYear}
-            selectedClass={selectedClass}
-          />
-        </section>
+          <BestStudents />
+          <section className={style.activity}>
+          <div className={style.celender}>
+            <Calendar />
+          </div>
+          {/* <div className={style.onlineMember}>
+            <OnlineMember />
+          </div> */}
+        </section>  
+        </section>              
       </div>
+      <p>design by Babatunde Emmanuel</p>
+      
     </section>
   );
 }

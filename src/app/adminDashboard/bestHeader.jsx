@@ -1,22 +1,30 @@
 import React from "react";
 import style from "./bestHeader.module.css";
 
-function BestHeader({ handleClassChange, handleClassSubmit, selectedClass, handleYearSubmit, handleYearChange, selectedYear }) {
+function BestHeader({
+  handleClassChange,
+  handleClassSubmit,
+  selectedClass,
+  handleYearSubmit,
+  handleYearChange,
+  selectedYear,  
+}) {
+
   const datas = ["Primary", "Junior", "Senior", "College", "Evening"];
   const years = ["2023", "2024", "2025", "2026", "2027"];
-
+  
   return (
     <section>
       <div className={style.container}>
         <div className={style.main}>
           <h1>Best Students of the Year</h1>
           <div className={style.formSelection}>
-            <section className={style.section}>              
+            <section className={style.section}>
               <form onSubmit={handleClassSubmit}>
                 <label>
                   <select
                     className={style.select}
-                    value={selectedClass}
+                    value={selectedClass.class}
                     onChange={handleClassChange}
                   >
                     {datas.map((data) => (
@@ -28,7 +36,7 @@ function BestHeader({ handleClassChange, handleClassSubmit, selectedClass, handl
                 </label>
               </form>
             </section>
-            <section className={style.section}>              
+            <section className={style.section}>
               <form onSubmit={handleYearSubmit}>
                 <label>
                   <select
@@ -45,7 +53,6 @@ function BestHeader({ handleClassChange, handleClassSubmit, selectedClass, handl
                 </label>
               </form>
             </section>
-            
           </div>
         </div>
       </div>

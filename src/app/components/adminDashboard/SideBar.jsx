@@ -1,7 +1,6 @@
 import Link from "next/link";
 import style from "./styles/sidebar.module.css";
 import Icon from "./Icon";
-import { Suspense } from "react";
 
 function SideBar({ showSidebar, toggleSidebar }) {
   const handleFormClick = (e) => {
@@ -22,11 +21,9 @@ function SideBar({ showSidebar, toggleSidebar }) {
         </div>
         <ul onClick={toggleSidebar}>
           <li>
-            <Suspense fallback={<div>Loading...</div>}>
-              <Link href="/adminDashboard" onClick={toggleSidebar}>
-                Dashboard
-              </Link>
-            </Suspense>
+            <Link href="/adminDashboard">
+              Dashboard
+            </Link>
           </li>
           <li>
             <Link href="/adminDashboard/admin">Admin</Link>
