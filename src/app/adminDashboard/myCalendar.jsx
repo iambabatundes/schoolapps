@@ -1,61 +1,85 @@
-import React, { useState } from "react";
-import Calendar, { Day } from "react-calendar";
-import "./styles/calendar.module.css";
+import React, { useState, useEffect } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import "../styles/globals.css";
 import ColorPicker from "./ColorPicker";
-
-const activities = [
-  {
-    title: "Activity 1",
-    description: "Description 1",
-    startDate: new Date("2023-05-12"),
-    endDate: new Date("2023-05-12"),
-    color: "red",
-  },
-  {
-    title: "Activity 2",
-    description: "Description 2",
-    startDate: new Date("2023-05-10"),
-    endDate: new Date("2023-05-10"),
-    color: "blue",
-  },
-  {
-    title: "Activity 3",
-    description: "Description 3",
-    startDate: new Date("2023-05-11"),
-    endDate: new Date("2023-05-11"),
-    color: "green",
-  },
-];
 
 const MyCalendar = () => {
   const [date, setDate] = useState(new Date());
   const [showModal, setShowModal] = useState(false);
   const [description, setDescription] = useState("");
-  const [startDate, setStartDate] = useState(date);
-  const [endDate, setEndDate] = useState(date);
-  const [color, setColor] = useState("");
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  // const [color, setColor] = useState("");
   const [showTime, setShowTime] = useState(true);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(date);
   const [eventTitle, setEventTitle] = useState("");
   const [eventColor, setEventColor] = useState("");
+  const [modalMode, setModalMode] = useState("add");  
+  const [eventCount, setEventCount] = useState(0);
 
-  const filteredActivities = activities.filter(
-    (activity) =>
-      new Date(activity.startDate) <= date && new Date(activity.endDate) >= date
-  );
+  const [activities, setActivities] = useState([
+    {
+      title: "Activity 1",
+      description: "Description 1",
+      startDate: new Date("2023-05-12"),
+      endDate: new Date("2023-05-12"),
+      color: "red",
+    },
+    {
+      title: "Activity 2",
+      description: "Description 2",
+      startDate: new Date("2023-05-10"),
+      endDate: new Date("2023-05-10"),
+      color: "blue",
+    },
+    {
+      title: "Activity 3",
+      description: "Description 3",
+      startDate: new Date("2023-05-11"),
+      endDate: new Date("2023-05-11"),
+      color: "green",
+    },
+  ]);  
+
+  useEffect(() => {
+    setStartDate(selectedDate);
+    setEndDate(selectedDate);
+  }, [selectedDate]);
 
   const handleDateChange = (date) => {
-    setSelectedDate(null);
+    setSelectedDate(date);
     setDate(date);
   };
 
   const openModal = (date) => {
-    setSelectedDate(date);
-    setStartDate(date);
-    setEndDate(date);
-    setEventTitle("");
-    setEventColor("");
+    setSelectedDate(selectedDate);        
+
+    const formattedDate = selectedDate.toDateString();
+    const activityForSelectedDate = activities.find(
+      (activity) =>
+        activity.startDate.toDateString() === formattedDate ||
+        activity.endDate.toDateString() === formattedDate
+    );
+
+    if (activityForSelectedDate) {
+      setEventTitle(activityForSelectedDate.title);
+      setEventColor(activityForSelectedDate.color);
+      setDescription(activityForSelectedDate.description);
+    } else {
+      setEventTitle("");
+      setEventColor("");
+      setDescription("");
+    }
+
+    if (activityForSelectedDate) {
+      setModalMode("edit");
+      setEventCount(activityForSelectedDate.eventCount || 1);
+    } else {
+      setModalMode("add");
+      setEventCount(0);
+    }
+
     setShowModal(true);
   };
 
@@ -68,42 +92,153 @@ const MyCalendar = () => {
   };
 
   const handleStartDateChange = (date) => {
-    const newDate = new Date(date);
-    setStartDate(newDate);
+    setStartDate(date);
   };
 
   const handleEndDateChange = (date) => {
-    const newDate = new Date(date);
-    setEndDate(newDate);
+    setEndDate(date);
   };
 
-  const handleColorChange = (event) => {
-    setColor(event.target.value);
+    const handleColorChange = (color) => {
+    setEventColor(color);
   };
 
   const handleAddActivity = () => {
     const newActivity = {
       title: eventTitle,
       description: description,
-      startDate: showTime ? startDate : new Date(startDate.toDateString()),
-      endDate: showTime ? endDate : new Date(endDate.toDateString()),
+      startDate: showTime ? (startDate instanceof Date ? startDate.toISOString() : "") : (startDate || ""),
+      endDate: showTime ? (endDate instanceof Date ? endDate.toISOString() : "") : (endDate || ""),
       color: eventColor,
     };
-    activities.push(newActivity);
+  
+    if (eventTitle.trim() !== "") {
+      if (modalMode === "edit") {
+        const existingActivityIndex = activities.findIndex(
+          (activity) =>
+            (activity.startDate && startDate && activity.startDate.toDateString() === startDate.toDateString()) ||
+            (activity.endDate && endDate && activity.endDate.toDateString() === endDate.toDateString()) ||
+            activity.title === eventTitle
+        );
+  
+        if (existingActivityIndex !== -1) {
+          const updatedActivities = [...activities];
+          updatedActivities[existingActivityIndex] = newActivity;
+          setActivities(updatedActivities);
+        }
+      } else {
+        setActivities((prevActivities) => [...prevActivities, newActivity]);
+      }
+    }
+  
     closeModal();
-    setDate(new Date(date)); // Update the date state to trigger re-render
-  };
+  };  
 
-  const handleDeleteActivity = (activity) => {
-    const index = activities.findIndex((a) => a === activity);
-    if (index !== -1) {
-      activities.splice(index, 1);
+  const handleDeleteActivity = () => {
+    if (eventTitle.trim() !== "") {
+      const updatedActivities = activities.filter(
+        (activity) =>
+          (!activity.startDate || activity.startDate.toDateString() !== startDate.toDateString()) ||
+          (!activity.endDate || activity.endDate.toDateString() !== endDate.toDateString()) ||
+          activity.title !== eventTitle
+      );
+      setActivities(updatedActivities);
+      closeModal();
     }
   };
+  
 
   const handleToggle = () => {
-    setShowTime(!showTime);
+    setShowTime((prevShowTime) => !prevShowTime);
   };
+
+  const tileContent = ({ date }) => {
+    const activitiesForDate = activities.filter((activity) => {
+      const startDate = activity.startDate;
+      const endDate = activity.endDate;
+  
+      if (startDate && endDate) {
+        return (
+          startDate.toDateString() === date.toDateString() ||
+          endDate.toDateString() === date.toDateString()
+        );
+      } else if (startDate) {
+        return startDate.toDateString() === date.toDateString();
+      } else if (endDate) {
+        return endDate.toDateString() === date.toDateString();
+      }
+  
+      return false;
+    });
+
+    const isSelectedDate =
+      selectedDate &&
+      selectedDate.toDateString &&
+      selectedDate.toDateString() === date.toDateString();
+    const hasEventTitle =
+      isSelectedDate && eventTitle && eventTitle.trim() !== "";
+
+    let selectedColor = "";
+
+    if (isSelectedDate && eventColor) {
+      selectedColor = eventColor;
+    } else {
+      const activityForSelectedDate = activities.find(
+        (activity) =>
+          activity.startDate.toDateString() === date.toDateString() ||
+          activity.endDate.toDateString() === date.toDateString()
+      );
+      if (activityForSelectedDate) {
+        selectedColor = activityForSelectedDate.color;
+      }
+    }
+
+    return (
+      <div className="tile-content">
+        <div className="events">
+          {activitiesForDate.map((activity, index) => (
+            <div
+              key={index}
+              className={`activity activity-${activity.color}`}
+              title={activity.title}
+              style={{ backgroundColor: activity.color }}
+            >
+              {activity.title}
+            </div>
+          ))}
+          {isSelectedDate && eventCount > 1 && (
+            <div className="event-count">+{eventCount - 1} more</div>
+          )}
+        </div>
+        {isSelectedDate && hasEventTitle && (
+          <div
+            className={`activity activity-${selectedColor}`}
+            title={eventTitle}
+            style={{ backgroundColor: selectedColor }}
+            onClick={() => {
+              setEventTitle(eventTitle);
+              setEventColor(eventColor);
+              setDescription(description);
+              setModalMode("edit");
+              setShowModal(true);
+            }}
+          >
+            {eventTitle}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const dayComponent = ({ date, ...props }) => (
+    <div
+      {...props}
+      className={`${props.className} ${
+        new Date().toDateString() === date.toDateString() ? "today" : ""
+      }`}
+      onDoubleClick={() => openModal(date)}
+    />
+  );
 
   return (
     <div>
@@ -115,55 +250,8 @@ const MyCalendar = () => {
           value={date}
           onChange={handleDateChange}
           className="MyCalendar"
-          tileContent={({ date }) => {
-            const activitiesForDate = activities.filter(
-              (activity) =>
-                new Date(activity.startDate).toDateString() ===
-                  date.toDateString() ||
-                new Date(activity.endDate).toDateString() ===
-                  date.toDateString()
-            );
-
-            const isSelectedDate =
-              selectedDate &&
-              selectedDate.toDateString &&
-              selectedDate.toDateString() === date.toDateString();
-            const hasEventTitle =
-              isSelectedDate && eventTitle && eventTitle.trim() !== "";
-
-            return (
-              <div className="tile-content">
-                <div className="events">
-                  {activitiesForDate.map((activity, index) => (
-                    <div
-                      key={index}
-                      className={`activity activity-${activity.color}`}
-                      title={activity.title}
-                    >
-                      {activity.title}
-                    </div>
-                  ))}
-                </div>
-                {isSelectedDate && hasEventTitle && (
-                  <div
-                    className={`activity activity-${eventColor}`}
-                    title={eventTitle}
-                  >
-                    {eventTitle}
-                  </div>
-                )}
-              </div>
-            );
-          }}
-          dayComponent={({ date, ...props }) => (
-            <Day
-              {...props}
-              className={`${props.className} ${
-                new Date().toDateString() === date.toDateString() ? "today" : ""
-              }`}
-              onDoubleClick={() => openModal(date)}
-            />
-          )}
+          tileContent={tileContent}
+          dayComponent={dayComponent}
         />
       </div>
       {showModal && (
@@ -171,9 +259,15 @@ const MyCalendar = () => {
           <div className="modal-arrow"></div>
           <div className="modal-header">
             <button onClick={closeModal}>Cancel</button>
-            <h2>Add Events</h2>
-            <button onClick={handleAddActivity}>Add</button>
+            {modalMode === "add" ? <h2>Add Event</h2> : <h2>Edit Event</h2>}
+            {modalMode === "add" ? (
+              <button onClick={handleAddActivity}>Add</button>
+            ) : (
+              <button onClick={handleAddActivity}>Save</button>
+            )}
+            {eventCount > 1 && <span>{eventCount} more</span>}
           </div>
+
           <div className="modal-heading">
             <label htmlFor="title">Title:</label>
             <input
@@ -196,11 +290,12 @@ const MyCalendar = () => {
             <input
               type="date"
               id="startDate"
-              value={startDate.toISOString().slice(0, 10)}
+              value={startDate ? startDate.toISOString().slice(0, 10) : ""}
               onChange={(event) =>
                 handleStartDateChange(new Date(event.target.value))
               }
             />
+
             {!showTime && (
               <input
                 type="time"
@@ -213,8 +308,8 @@ const MyCalendar = () => {
                   .toString()
                   .padStart(2, "0")}`}
                 onChange={(event) =>
-                  setStartDate((prevState) => {
-                    const newDate = new Date(prevState);
+                  setStartDate((prevStartDate) => {
+                    const newDate = new Date(prevStartDate);
                     newDate.setHours(event.target.value.split(":")[0]);
                     newDate.setMinutes(event.target.value.split(":")[1]);
                     return newDate;
@@ -228,7 +323,7 @@ const MyCalendar = () => {
             <input
               type="date"
               id="endDate"
-              value={endDate.toISOString().slice(0, 10)}
+              value={endDate ? endDate.toISOString().slice(0, 10) : ""}
               onChange={(event) =>
                 handleEndDateChange(new Date(event.target.value))
               }
@@ -245,8 +340,8 @@ const MyCalendar = () => {
                   .toString()
                   .padStart(2, "0")}`}
                 onChange={(event) =>
-                  setEndDate((prevState) => {
-                    const newDate = new Date(prevState);
+                  setEndDate((prevEndDate) => {
+                    const newDate = new Date(prevEndDate);
                     newDate.setHours(event.target.value.split(":")[0]);
                     newDate.setMinutes(event.target.value.split(":")[1]);
                     return newDate;
@@ -255,6 +350,7 @@ const MyCalendar = () => {
               />
             )}
           </div>
+
           <div className="modal-heading">
             <label htmlFor="allDay">All day:</label>
             <label className="switch">
@@ -262,15 +358,26 @@ const MyCalendar = () => {
                 type="checkbox"
                 id="allDay"
                 checked={!showTime}
-                onChange={(event) => setShowTime(!event.target.checked)}
+                onChange={handleToggle}
               />
               <span className="slider round"></span>
             </label>
           </div>
-          <ColorPicker
-            selectedColor={eventColor}
-            onSelectColor={setEventColor}
-          />
+
+          <div className="modal-heading">
+            <label htmlFor="color">Color:</label>
+            <ColorPicker
+              id="color"
+              color={eventColor}
+              onColorChange={handleColorChange}
+            />
+          </div>
+
+          {modalMode === "edit" && (                        
+              <button id="delete" onClick={handleDeleteActivity} className="btn-delete">
+                Delete
+              </button>            
+          )}
         </section>
       )}
     </div>
